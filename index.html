@@ -1,0 +1,64 @@
+<html>
+<head>
+<title>alida</title>
+<style type="text/css">
+body {
+  background-color: #ffffff;
+  margin: 0;
+}
+
+#container {
+  position: relative;
+  width: 500px;
+  height: 667px;
+  margin: 30px auto;
+  overflow: hidden;
+}
+
+.layer {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 500px;
+  height: 667px;
+}
+
+#whites { z-index: 1; }
+#pupils { z-index: 2; }
+#face   { z-index: 3; }
+</style>
+</head>
+<body>
+
+<div id="container">
+  <img id="whites" class="layer" src="alida-white-eye-behind.png">
+  <img id="pupils" class="layer" src="alida-pupils.png">
+  <img id="face" class="layer" src="alida-face.png">
+</div>
+
+<script type="text/javascript">
+var box = document.getElementById('container');
+var pupils = document.getElementById('pupils');
+var maxMove = 8;
+
+document.onmousemove = function(e) {
+  e = e || window.event;
+  var rect = box.getBoundingClientRect();
+
+  var centerX = rect.left + (rect.width * 0.50);
+  var centerY = rect.top + (rect.height * 0.42);
+
+  var dx = e.clientX - centerX;
+  var dy = e.clientY - centerY;
+
+  var angle = Math.atan2(dy, dx);
+  var dist = Math.sqrt(dx * dx + dy * dy) / 20;
+  if (dist > maxMove) dist = maxMove;
+
+  pupils.style.left = Math.round(Math.cos(angle) * dist) + 'px';
+  pupils.style.top = Math.round(Math.sin(angle) * dist) + 'px';
+};
+</script>
+
+</body>
+</html>
